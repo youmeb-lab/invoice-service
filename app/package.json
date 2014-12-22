@@ -9,7 +9,14 @@
   "author": "Po-Ying Chen <poying.me@gmail.com> (陳柏穎)",
   "license": "MIT",
   "dependencies": {
+    "cetustek-invoice": "git://github.com/youmeb-lab/cetustek-invoice",
+    "co": "^4.0.2",
+    "koa-compose": "^2.3.0",
     "nodemon": "^1.2.1",
-    "nsq.js": "^0.12.6"
+    "nsq.js": "^0.12.6",
+    "object-assign": "https://registry.npmjs.org/object-assign/-/object-assign-2.0.0.tgz",
+    "thunkify": "^2.1.2",
+    "win-fork": "^1.1.1",
+    "winston": "^0.8.3"
   }
 }
