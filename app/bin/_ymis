@@ -1,0 +1,14 @@
+#!/usr/bin/env node
+
+var ymis = require('../lib/service');
+var logger = require('../lib/logger');
+
+var reader = ymis.createReader();
+var writer = ymis.createWriter();
+var service = ymis.createService();
+
+reader.on('data', function (data) {
+  service.create(data.basicData, data.items)
+    .then()
+    .catch();
+});
