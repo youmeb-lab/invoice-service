@@ -20,8 +20,8 @@
 
 繼承 `EventEmitter`，emit `ready` 事件
 
-* #publish()
-* #ready() - 回傳 yieldable object
+* #publish(object)
+* #ready(callback)
 
 ## 開發
 

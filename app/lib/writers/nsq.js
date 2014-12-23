@@ -28,16 +28,14 @@ proto._onReady = function () {
   this.emit('ready');
 };
 
-proto.ready = function () {
-  return (function (cb) {
-    if (this._ready) {
-      return cb();
-    }
-    this.once('ready', cb);
-  }).bind(this);
+proto.ready = function (cb) {
+  if (this._ready) {
+    return cb();
+  }
+  this.once('ready', cb);
 };
 
 proto.publish = function (res) {
-  this.writer.publish();
+  this.writer.publish(this.topic, JSON.stringify(res));
   return this;
 };
