@@ -3,11 +3,12 @@
 var co = require('co');
 var util = require('util');
 var domain = require('domain');
-var debug = require('debug')('app');
+var debug = require('debug')('ymis:app');
 var compose = require('koa-compose');
 var assign = require('object-assign');
 var Emitter = require('events').EventEmitter;
 var noop = require('./noop');
+var logger = require('./logger');
 var config = require('./config');
 var Context = require('./context');
 var middlewares = require('./middlewares');
@@ -54,15 +55,16 @@ var proto = {
   },
 
   callback: function () {
-    var mw = [respond].concat(this.middleware);
+    debug('create callback function');
+    var mw = [respond].concat(this.middlewares);
     var gen = compose(mw);
     var fn = co.wrap(gen);
 
     return (function (data) {
       debug('receive');
+      logger.info('receive invoice', data);
       var ctx = new Context(this, data);
-      fn.call(ctx)
-        .catch(this.emit.bind(this, 'error'));
+      fn.call(ctx).catch(this.emit.bind(this, 'error'));
     }).bind(this);
   }
 };
@@ -92,13 +94,20 @@ function *respond(next) {
     // 未知錯誤
     if (err.type === undefined) {
       err = new Error(err.message);
-      err.type = UNKNOWN_TYPE;
+      err.type = UNKNOWN_ERROR;
+      this.app.emit('error', err);
+    } else {
+      logger.error(err.message, {
+        type: err.type,
+        code: err.code
+      });
     }
 
-    this.app.emit('error', err);
+    debug('failed %s', err.message);
     this.failed(err);
     return;
   }
 
+  debug('success');
   this.success();
 }

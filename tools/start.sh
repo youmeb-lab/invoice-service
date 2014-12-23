@@ -7,6 +7,8 @@ echo $NSQLOOKUP_CID
 docker run \
   --name ${YMIS_CONTAINER_NAME_PREFIX}nsqd \
   --link ${YMIS_CONTAINER_NAME_PREFIX}nsqlookupd:nsqlookupd \
+  -p 4150:4150 \
+  -p 4151:4151 \
   -d nsqio/nsqd --lookupd-tcp-address=${NSQLOOKUP_ADDRESS}:4160
 
 docker run \
