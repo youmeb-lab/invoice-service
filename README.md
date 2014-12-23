@@ -9,11 +9,19 @@
 
 ## Reader
 
+繼承 `EventEmitter`，emit `message` 事件跟 `giveup` 事件
+
+[./app/lib/readers/nsq.js](./app/lib/readers/nsq.js#L35)
+
+* #resume()
+* #pause()
+
 ## Writer
 
-## Logging
+繼承 `EventEmitter`，emit `ready` 事件
 
-可以使用任何 `WriteableStream` 來寫入資料
+* #publish()
+* #ready() - 回傳 yieldable object
 
 ## 開發
 
@@ -26,4 +34,5 @@ http://localhost:4171
 ### 指令
 
 * __啟動 server__: `make`
+* __停止 server__: `make stop`
 * __列出 container__: `make ps`
