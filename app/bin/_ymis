@@ -8,6 +8,7 @@ var logger = require('../lib/logger');
 // middlewares
 // app.use(GeneratorFunction);
 app.use(app.logger());
+app.use(app.createInvoice());
 
 // 處理 reader、writer 還有一些沒有考慮到的錯誤
 app.on('error', function (err) {
@@ -15,9 +16,9 @@ app.on('error', function (err) {
     + (err.stack ? '\n' + err.stack : err.message));
 });
 
-app.start();
-
-console.log();
-console.log('  %s@%s', chalk.cyan(pkg.name), chalk.yellow(pkg.version));
-console.log('  https://github.com/youmeb-lab/cetustek-invoice');
-console.log();
+app.start(function () {
+  console.log();
+  console.log('  %s@%s', chalk.cyan(pkg.name), chalk.yellow(pkg.version));
+  console.log('  https://github.com/youmeb-lab/cetustek-invoice');
+  console.log();
+});

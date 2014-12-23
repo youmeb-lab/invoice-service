@@ -10,14 +10,34 @@ function Context(app, msg) {
 
 Context.prototype = {
   get basicData() {
-    return this.data.basicData;
+    return this.data.basicData || {};
   },
 
   get items() {
-    return this.data.items;
+    return this.data.items || [];
   },
 
-  finish: function () {
+  create: function *() {
+    return yield this.writer.create(this.basicData, this.items);
+  },
+
+  success: function () {
+    this.publish({
+      OrderId: this.basicData.OrderId,
+      InvoiceNumber: this.number
+    });
+    this.emit('finish');
+  },
+
+  failed: function (err) {
+    this.writer.publish({
+      OrderId: this.basicData.OrderId,
+      error: {
+        type: err.type,
+        code: err.code,
+        reason: err.message
+      }
+    });
     this.emit('finish');
   }
 };

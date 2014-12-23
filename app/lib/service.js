@@ -6,6 +6,7 @@ var domain = require('domain');
 var compose = require('koa-compose');
 var assign = require('object-assign');
 var Emitter = require('events').EventEmitter;
+var noop = require('./noop');
 var config = require('./config');
 var Context = require('./context');
 var middlewares = require('./middlewares');
@@ -35,9 +36,10 @@ var proto = {
     return this;
   },
 
-  start: function () {
-    this.reader.on('data', this.callback());
+  start: function (cb) {
+    this.reader.on('message', this.callback());
     this.reader.resume();
+    this.writer.ready(cb || noop);
     return this;
   },
 
@@ -89,6 +91,9 @@ function *respond(next) {
     }
 
     this.app.emit('error', err);
-    this.finish(err);
+    this.failed(err);
+    return;
   }
+
+  this.success();
 }
