@@ -42,13 +42,13 @@ proto._onDiscard = function (nsqmsg) {
 };
 
 function nsqmsg2msg(nsqmsg) {
-  var data = nsqmsg.body.toString();
+  var body = nsqmsg.body.toString();
 
   try {
-    data = JSON.parse(data);
+    body = JSON.parse(body);
   } catch (e) {
-    data = {};
+    body = {};
   }
 
-  return new Message(data.basicData, data.items);
+  return new Message(body.data, body.items);
 }

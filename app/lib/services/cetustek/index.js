@@ -8,15 +8,13 @@ module.exports = CetustekService;
 var proto = CetustekService.prototype;
 
 function CetustekService(config) {
-  this.client = new Invoice({
-    user: config.user,
-    password: config.password
-  });
+  this.client = new Invoice(config);
 }
 
-proto.create = function (basicData, items) {
-  return this.client.create(basicData, items)
+proto.create = function (data, items) {
+  return this.client.create(data, items)
     .catch(function (err) {
       err.type = type(err.code);
+      throw err;
     });
 };

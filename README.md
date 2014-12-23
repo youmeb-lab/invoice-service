@@ -30,9 +30,3 @@
 ```
 http://localhost:4171
 ```
-
-### 指令
-
-* __啟動 server__: `make`
-* __停止 server__: `make stop`
-* __列出 container__: `make ps`

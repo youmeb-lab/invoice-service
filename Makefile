@@ -11,4 +11,4 @@ ps:
 	@./tools/list.sh
 
 bash:
-	@docker run --rm -it -v $(shell pwd)/app:/app $(YMIS_IMAGE) bash
+	@./tools/exec.sh

@@ -3,11 +3,11 @@
 var config = module.exports;
 
 var nsqlookupd = process.env
-  .NSQLOOKUPD_PORT_4160_TCP
+  .NSQLOOKUPD_PORT_4161_TCP
   .replace(/^tcp:\/\//, '');
 
-var nsqdHost = process.env
-  .NSQLOOKUPD_PORT_4160_TCP_ADDR;
+var nsqd = process.env
+  .NSQD_PORT_4150_TCP_ADDR;
 
 config.logdir = './log';
 
@@ -22,7 +22,7 @@ config.writer = 'nsq';
 // 唯一一個差異是 writer 我們需要給定一個 topic 用來塞回傳訊息
 config.nsq = {
   reader: {
-    nsqlookupd: [ nsqlookupd ],
+    nsqd: [ nsqd + ':4150' ],
     client_id: 'consumer',
     topic: 'invoice',
     channel: 'create',
@@ -30,10 +30,10 @@ config.nsq = {
     maxAttempts: 5
   },
   writer: {
-    port: '4151',
-    host: nsqdHost,
+    port: '4150',
+    host: nsqd,
     topic: 'invoice-create-response',
-    nsqlookupd: [ nsqlookupd ]
+    nsqlookupd: nsqlookupd
   }
 };
 

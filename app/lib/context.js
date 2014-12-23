@@ -5,39 +5,38 @@ module.exports = Context;
 function Context(app, msg) {
   this.message = msg;
   this.app = app;
-  this.data = JSON.parse(msg.body.toString());
 }
 
 Context.prototype = {
-  get basicData() {
-    return this.data.basicData || {};
+  get data() {
+    return this.message.data;
   },
 
   get items() {
-    return this.data.items || [];
+    return this.message.items;
   },
 
   create: function *() {
-    return yield this.writer.create(this.basicData, this.items);
+    return yield this.app.service.create(this.data, this.items);
   },
 
   success: function () {
-    this.publish({
-      OrderId: this.basicData.OrderId,
+    this.app.writer.publish({
+      OrderId: this.data.OrderId,
       InvoiceNumber: this.number
     });
-    this.emit('finish');
+    this.message.emit('finish');
   },
 
   failed: function (err) {
-    this.writer.publish({
-      OrderId: this.basicData.OrderId,
+    this.app.writer.publish({
+      OrderId: this.data.OrderId,
       error: {
         type: err.type,
         code: err.code,
         reason: err.message
       }
     });
-    this.emit('finish');
+    this.message.emit('finish');
   }
 };

@@ -7,7 +7,7 @@ module.exports = Message;
 
 util.inherits(Message, Emitter);
 
-function Message(basicData, items) {
-  this.basicData = basicData || {};
+function Message(data, items) {
+  this.data = data || {};
   this.items = items || [];
 }
