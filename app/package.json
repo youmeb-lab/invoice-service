@@ -12,6 +12,7 @@
     "cetustek-invoice": "git://github.com/youmeb-lab/cetustek-invoice",
     "chalk": "^0.5.1",
     "co": "^4.0.2",
+    "debug": "^2.1.0",
     "koa-compose": "^2.3.0",
     "nodemon": "^1.2.1",
     "nsq.js": "^0.12.6",

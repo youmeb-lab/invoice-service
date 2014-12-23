@@ -3,6 +3,7 @@
 var co = require('co');
 var util = require('util');
 var domain = require('domain');
+var debug = require('debug')('app');
 var compose = require('koa-compose');
 var assign = require('object-assign');
 var Emitter = require('events').EventEmitter;
@@ -32,11 +33,13 @@ function App() {
 
 var proto = {
   use: function (fn) {
+    debug('use %s', fn.name);
     this.middlewares.push(fn);
     return this;
   },
 
   start: function (cb) {
+    debug('start');
     this.reader.on('message', this.callback());
     this.reader.resume();
     this.writer.ready(cb || noop);
@@ -44,6 +47,7 @@ var proto = {
   },
 
   stop: function () {
+    debug('pause');
     this.reader.pause();
     this.reader.removeAllListeners('data');
     return this;
@@ -55,6 +59,7 @@ var proto = {
     var fn = co.wrap(gen);
 
     return (function (data) {
+      debug('receive');
       var ctx = new Context(this, data);
       fn.call(ctx)
         .catch(this.emit.bind(this, 'error'));
