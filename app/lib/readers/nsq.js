@@ -32,7 +32,7 @@ proto.pause = function () {
 proto._onMessage = function (nsqmsg) {
   var msg = nsqmsg2msg(nsqmsg);
   msg.once('finish', nsqmsg.finish.bind(nsqmsg));
-  this.emit('data', msg);
+  this.emit('message', msg);
 };
 
 proto._onDiscard = function (nsqmsg) {
