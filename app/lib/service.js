@@ -1,19 +1,24 @@
 'use strict';
 
 var co = require('co');
+var util = require('util');
 var domain = require('domain');
-var Emitter = require('events').EventEmitter;
 var compose = require('koa-compose');
+var assign = require('object-assign');
+var Emitter = require('events').EventEmitter;
 var config = require('./config');
 var Context = require('./context');
-
-util.inherits(App, Emitter);
+var middlewares = require('./middlewares');
+var UNKNOWN_ERROR = require('./error-types').UNKNOWN_ERROR;
 
 module.exports = App;
 
 function App() {
-  this.middlewares = [];
+  if (!(this instanceof App)) {
+    return new App();
+  }
 
+  this.middlewares = [];
   this.reader = createReader();
   this.writer = createWriter();
   this.service = createService();
@@ -24,7 +29,7 @@ function App() {
   d.add(this.service);
 }
 
-App.prototype = {
+var proto = {
   use: function (fn) {
     this.middlewares.push(fn);
     return this;
@@ -55,6 +60,9 @@ App.prototype = {
   }
 };
 
+assign(App, middlewares);
+assign(App.prototype, Emitter.prototype, proto, middlewares);
+
 function createReader() {
   var Reader = require('./readers/' + config.reader);
   return new Reader(config[config.reader]);
@@ -74,8 +82,13 @@ function *respond(next) {
   try {
     yield* next;
   } catch (err) {
-    // 未知 Error
-    if (!err.code) {
+    // 未知錯誤
+    if (err.type === undefined) {
+      err = new Error(err.message);
+      err.type = UNKNOWN_TYPE;
     }
+
+    this.app.emit('error', err);
+    this.finish(err);
   }
 }

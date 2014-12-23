@@ -1,14 +1,23 @@
 #!/usr/bin/env node
 
-var ymis = require('../lib/service');
+var chalk = require('chalk');
+var pkg = require('../package');
+var app = require('../lib/service')();
 var logger = require('../lib/logger');
 
-var reader = ymis.createReader();
-var writer = ymis.createWriter();
-var service = ymis.createService();
+// middlewares
+// app.use(GeneratorFunction);
+app.use(app.logger());
 
-reader.on('data', function (data) {
-  service.create(data.basicData, data.items)
-    .then()
-    .catch();
+// 處理 reader、writer 還有一些沒有考慮到的錯誤
+app.on('error', function (err) {
+  logger.error('Uncaught Error - '
+    + (err.stack ? '\n' + err.stack : err.message));
 });
+
+app.start();
+
+console.log();
+console.log('  %s@%s', chalk.cyan(pkg.name), chalk.yellow(pkg.version));
+console.log('  https://github.com/youmeb-lab/cetustek-invoice');
+console.log();

@@ -4,8 +4,8 @@ var path = require('path');
 var spawn = require('win-fork');
 var args = process.argv.slice(2);
 
-args.unshift('--harmony');
 args.unshift(path.resolve(__dirname, '_ymis'));
+args.unshift('--harmony');
 
 var proc = spawn('node', args, { stdio: 'inherit' });
 
