@@ -1,8 +1,8 @@
 'use strict';
 
-var nsq = require('nsq.js');
 var util = require('util');
-var Emitter = require('../emitter');
+var nsq = require('nsq.js');
+var Emitter = require('events').EventEmitter;
 
 module.exports = NSQWriter;
 
@@ -20,6 +20,7 @@ function NSQWriter(config) {
 
   var writer = this.writer = nsq.writer(config);
   writer.once('ready', this._onReady.bind(this));
+  writer.on('error', this.emit.bind(this, 'error'));
 }
 
 proto._onReady = function () {

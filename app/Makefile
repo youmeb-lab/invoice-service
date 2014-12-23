@@ -1,5 +1,5 @@
 NM := node_modules
-MON := $(NM)/.bin/nodemon
+MON := $(NM)/.bin/nodemon --harmony
 
 run:
-	@$(MON) --harmony bin/ymis
+	@$(MON) bin/ymis

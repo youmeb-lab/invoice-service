@@ -1,6 +1,7 @@
 'use strict';
 
 var Invoice = require('cetustek-invoice');
+var type = require('./type');
 
 module.exports = CetustekService;
 
@@ -14,5 +15,8 @@ function CetustekService(config) {
 }
 
 proto.create = function (basicData, items) {
-  return this.client.create(basicData, items);
+  return this.client.create(basicData, items)
+    .catch(function (err) {
+      err.type = type(err.code);
+    });
 };

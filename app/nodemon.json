@@ -1,5 +1,8 @@
 {
   "ignore": [
     "node_modules/*"
-  ]
+  ],
+  "execMap": {
+    "js": "node --harmony"
+  }
 }

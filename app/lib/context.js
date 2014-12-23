@@ -2,9 +2,10 @@
 
 module.exports = Context;
 
-function Context(app, data) {
+function Context(app, msg) {
+  this.message = msg;
   this.app = app;
-  this.data = data;
+  this.data = JSON.parse(msg.body.toString());
 }
 
 Context.prototype = {
@@ -14,5 +15,9 @@ Context.prototype = {
 
   get items() {
     return this.data.items;
+  },
+
+  finish: function () {
+    this.emit('finish');
   }
 };

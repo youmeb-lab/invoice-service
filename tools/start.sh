@@ -21,4 +21,5 @@ docker run \
   --link ${YMIS_CONTAINER_NAME_PREFIX}nsqlookupd:nsqlookupd \
   -v $(pwd)/app:/app \
   -p 8080:80 \
-  ${YMIS_IMAGE} make
+  -it \
+  ${YMIS_IMAGE} bash

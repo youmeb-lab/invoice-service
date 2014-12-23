@@ -38,9 +38,10 @@ config.nsq = {
 };
 
 // 電子發票服務
-config.invoice = 'cetustek';
+config.service = 'cetustek';
 
 config.cetustek = {
+  endpoint: '', // 可不填
   user: '',
   password: ''
 };
