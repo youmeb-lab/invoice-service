@@ -30,7 +30,7 @@ config.nsq = {
     maxAttempts: 5
   },
   writer: {
-    port: '4150',
+    port: '4151',
     host: nsqdHost,
     topic: 'invoice-create-response',
     nsqlookupd: [ nsqlookupd ]
