@@ -11,7 +11,7 @@
 #### Docker
 
 ```bash
-$ docker pull youmeb/invoice-service
+$ docker pull youmeb/invoice-service:20141224
 ```
 
 預設使用 NSQ 所以在不自訂 reader/writer 的情況下我們也必須啟動 `nsqd`：
