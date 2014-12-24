@@ -12,9 +12,11 @@ var nsqd = process.env
 config.logdir = './log';
 
 // 如何取得資料
+// 可以是一個 function，function 回傳一個 reader
 config.reader = 'nsq';
 
 // 如何回傳結果
+// 一樣也可以是一個 function，同 reader
 config.writer = 'nsq';
 
 // nsq reader/writer 設定
