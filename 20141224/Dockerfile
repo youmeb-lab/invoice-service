@@ -11,6 +11,8 @@ RUN wget "https://github.com/youmeb-lab/invoice-service/archive/$YMIS_VERSION.ta
   && npm i \
   && npm cache clear
 
-WORKDIR /app
+COPY docker-entrypoint.sh /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
+WORKDIR /ymis/app
 
-CMD ["ymis"]
+CMD []
