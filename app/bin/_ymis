@@ -8,6 +8,7 @@ var logger = require('../lib/logger');
 // middlewares
 // app.use(GeneratorFunction);
 app.use(app.logger());
+app.use(app.validate());
 app.use(app.createInvoice());
 
 // 處理 reader、writer 還有一些沒有考慮到的錯誤

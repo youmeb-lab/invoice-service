@@ -62,7 +62,7 @@ var proto = {
 
     return (function (data) {
       debug('receive');
-      logger.info('receive invoice', data);
+      logger.info('receive invoice', null, data);
       var ctx = new Context(this, data);
       fn.call(ctx).catch(this.emit.bind(this, 'error'));
     }).bind(this);
@@ -73,11 +73,17 @@ assign(App, middlewares);
 assign(App.prototype, Emitter.prototype, proto, middlewares);
 
 function createReader() {
+  if (typeof config.reader === 'function') {
+    return config.reader();
+  }
   var Reader = require('./readers/' + config.reader);
   return new Reader(config[config.reader]);
 };
 
 function createWriter() {
+  if (typeof config.writer === 'function') {
+    return config.writer();
+  }
   var Writer = require('./writers/' + config.writer);
   return new Writer(config[config.writer]);
 };
