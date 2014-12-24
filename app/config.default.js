@@ -1,13 +1,8 @@
 'use strict';
 
 var config = module.exports;
-
-var nsqlookupd = process.env
-  .NSQLOOKUPD_PORT_4161_TCP
-  .replace(/^tcp:\/\//, '');
-
-var nsqd = process.env
-  .NSQD_PORT_4150_TCP_ADDR;
+var nsqlookupd = process.env.NSQLOOKUPD;
+var nsqd = process.env.NSQD;
 
 config.logdir = './log';
 
