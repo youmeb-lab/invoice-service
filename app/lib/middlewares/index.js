@@ -1,5 +1,5 @@
 'use strict';
 
 exports.logger = require('./logger');
-exports.validate = require('./validate');
+exports.cetustekValidate = require('./cetustek-validate');
 exports.createInvoice = require('./create-invoice');

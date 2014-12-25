@@ -4,6 +4,13 @@ var config = module.exports;
 var nsqlookupd = process.env.NSQLOOKUPD;
 var nsqd = process.env.NSQD;
 
+// middlewares
+config.init = function (app) {
+  app.use(app.logger());
+  app.use(app.cetustekValidate());
+  app.use(app.createInvoice());
+};
+
 config.logdir = './log';
 
 // 如何取得資料

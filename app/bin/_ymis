@@ -4,12 +4,13 @@ var chalk = require('chalk');
 var pkg = require('../package');
 var app = require('../lib/service')();
 var logger = require('../lib/logger');
+var config = require('../lib/config');
 
 // middlewares
 // app.use(GeneratorFunction);
-app.use(app.logger());
-app.use(app.validate());
-app.use(app.createInvoice());
+if (typeof config.init === 'function') {
+  config.init(app);
+}
 
 // 處理 reader、writer 還有一些沒有考慮到的錯誤
 app.on('error', function (err) {
