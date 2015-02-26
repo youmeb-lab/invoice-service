@@ -13,9 +13,10 @@ if (typeof config.init === 'function') {
 }
 
 // 處理 reader、writer 還有一些沒有考慮到的錯誤
-app.on('error', function (err) {
-  logger.error('Uncaught Error - '
-    + (err.stack ? '\n' + err.stack : err.message));
+app.on('error', uncaught);
+process.on('uncaughtException', function (err) {
+  uncaught(err);
+  process.exit(1);
 });
 
 app.start(function () {
@@ -24,3 +25,8 @@ app.start(function () {
   console.log('  https://github.com/youmeb-lab/cetustek-invoice');
   console.log();
 });
+
+function uncaught(err) {
+  logger.error('Uncaught Error - '
+    + (err.stack ? '\n' + err.stack : err.message));
+}
