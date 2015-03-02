@@ -1,0 +1,14 @@
+{
+  "apps": [{
+    "name": "ymis",
+    "script": "bin/_ymis",
+    "watch": false,
+    "node_args": "--harmony",
+    "env": {
+      "NODE_ENV": "production"
+    },
+    "instances": 4,
+    "exec_mode": "cluster_mode",
+    "max_restarts": 0
+  }]
+}

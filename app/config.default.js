@@ -2,7 +2,7 @@
 
 var config = module.exports;
 var nsqlookupd = process.env.NSQLOOKUPD;
-var nsqd = process.env.NSQD;
+var nsqd = process.env.NSQD || '';
 
 // middlewares
 config.init = function (app) {
@@ -46,6 +46,6 @@ config.service = 'cetustek';
 
 config.cetustek = {
   endpoint: '', // 可不填
-  user: '',
-  password: ''
+  user: '123123',
+  password: '123123'
 };

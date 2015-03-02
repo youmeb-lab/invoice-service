@@ -9,6 +9,10 @@ var argv = require('optimist')
 
 var cwd = process.cwd();
 
+if (!argv.config && process.env.CONFIG) {
+  argv.config = process.env.CONFIG;
+}
+
 argv.config && (argv.config = path.resolve(cwd, argv.config));
 
 module.exports = argv;
